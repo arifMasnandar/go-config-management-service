@@ -1,13 +1,13 @@
 package main
 
 import (
-	//"net/http"
 	"fmt"
 	"log/slog"
 	"os"
 
 	"example.com/go-config-management-service/internal/adapter/config"
 	"example.com/go-config-management-service/internal/adapter/handler/http"
+	"example.com/go-config-management-service/internal/adapter/storage/memory"
 	"example.com/go-config-management-service/internal/core/service"
 )
 
@@ -19,7 +19,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	configurationService := service.NewConfigurationService()
+	configurationRepo := memory.NewConfigurationRepository()
+	configurationService := service.NewConfigurationService(configurationRepo)
 	configurationHandler := http.NewConfigurationHandler(configurationService)
 
 	// Init router

@@ -20,11 +20,9 @@ func NewConfigurationHandler(svc service.ConfigurationServicer) *ConfigurationHa
 
 type putConfigurationRequestUri struct {
 	Name string `uri:"name" binding:"required" example:"app_config"`
-	//Value string `json:"value" binding:"required" example:"config_value"`
 }
 
 type putConfigurationRequestJson struct {
-	//Name  string `uri:"name" binding:"required" example:"app_config"`
 	Value string `json:"value" binding:"required" example:"config_value"`
 }
 
@@ -82,8 +80,8 @@ func (ch *ConfigurationHandler) GetConfiguration(ctx *gin.Context) {
 }
 
 type listConfigurationsRequest struct {
-	Skip  uint64 `form:"skip" binding:"required,min=0" example:"0"`
-	Limit uint64 `form:"limit" binding:"required,min=5" example:"5"`
+	Skip  uint64 `form:"skip" binding:"min=0" example:"0"`
+	Limit uint64 `form:"limit" binding:"min=1,max=100" example:"5"`
 }
 
 func (ch *ConfigurationHandler) ListConfigurations(ctx *gin.Context) {
@@ -102,7 +100,7 @@ func (ch *ConfigurationHandler) ListConfigurations(ctx *gin.Context) {
 	}
 
 	for _, config := range configs {
-		configsList = append(configsList, newConfigResponse(&config))
+		configsList = append(configsList, newConfigResponse(config))
 	}
 
 	total := uint64(len(configsList))
@@ -132,38 +130,41 @@ func (ch *ConfigurationHandler) GetConfigurationVersion(ctx *gin.Context) {
 	handleSuccess(ctx, rsp)
 }
 
-type listConfigurationVersionsRequest struct {
-	Name  string `uri:"name" binding:"required" example:"app_config"`
-	Skip  uint64 `form:"skip" binding:"required,min=0" example:"0"`
-	Limit uint64 `form:"limit" binding:"required,min=5" example:"5"`
+type listConfigurationVersionsRequestUri struct {
+	Name string `uri:"name" binding:"required" example:"app_config"`
+}
+
+type listConfigurationVersionsRequestForm struct {
+	Skip  uint64 `form:"skip" binding:"min=0" example:"0"`
+	Limit uint64 `form:"limit" binding:"min=5,max=100" example:"5"`
 }
 
 func (ch *ConfigurationHandler) ListConfigurationVersions(ctx *gin.Context) {
-	var req listConfigurationVersionsRequest
-	var configsList []configurationResponse
-
-	if err := ctx.ShouldBindUri(&req); err != nil {
+	var reqUri listConfigurationVersionsRequestUri
+	if err := ctx.ShouldBindUri(&reqUri); err != nil {
 		validationError(ctx, err)
 		return
 	}
 
-	if err := ctx.ShouldBindQuery(&req); err != nil {
+	var reqForm listConfigurationVersionsRequestForm
+	if err := ctx.ShouldBindQuery(&reqForm); err != nil {
 		validationError(ctx, err)
 		return
 	}
 
-	configs, err := ch.svc.ListConfigurationVersions(ctx, req.Name, req.Skip, req.Limit)
+	configs, err := ch.svc.ListConfigurationVersions(ctx, reqUri.Name, reqForm.Skip, reqForm.Limit)
 	if err != nil {
 		handleError(ctx, err)
 		return
 	}
 
+	var configsList []configurationResponse
 	for _, config := range configs {
-		configsList = append(configsList, newConfigResponse(&config))
+		configsList = append(configsList, newConfigResponse(config))
 	}
 
 	total := uint64(len(configsList))
-	meta := newMeta(total, req.Limit, req.Skip)
+	meta := newMeta(total, reqForm.Limit, reqForm.Skip)
 	rsp := toMap(meta, configsList, "configs")
 
 	handleSuccess(ctx, rsp)
