@@ -45,6 +45,7 @@ func newMeta(total, limit, skip uint64) meta {
 
 type configurationResponse struct {
 	Name              string                 `json:"name" example:"app_config"`
+	Type              string                 `json:"type" example:"person"`
 	Value             map[string]interface{} `json:"value" swaggertype:"object,string"`
 	Version           int                    `json:"version" example:"1"`
 	RollbackedVersion int                    `json:"rollbacked_version,omitempty" example:"0"`            // Optional field for copied version
@@ -54,6 +55,7 @@ type configurationResponse struct {
 func newConfigResponse(config *domain.Config) configurationResponse {
 	return configurationResponse{
 		Name:              config.Name,
+		Type:              config.Type,
 		Value:             config.Value,
 		Version:           config.Version,
 		RollbackedVersion: config.RollbackedVersion,

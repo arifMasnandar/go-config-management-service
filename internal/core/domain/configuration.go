@@ -5,6 +5,7 @@ import "time"
 // Config represents data about a record Config.
 type Config struct {
 	Name              string                 `json:"name"`
+	Type              string                 `json:"type"`
 	Value             map[string]interface{} `json:"value"`
 	Version           int                    `json:"version"`
 	RollbackedVersion int                    `json:"rollbacked_version,omitempty"` // Optional field for copied version

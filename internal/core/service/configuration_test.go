@@ -13,60 +13,38 @@ func TestPutConfigurationSuccess(t *testing.T) {
 
 	configurationService := NewConfigurationService(mockRepo)
 
-	mockRepo.On("PutConfiguration", context.Background(), &domain.Config{Name: "test-config", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1}).Return(&domain.Config{Name: "test-config", Version: 1}, nil)
-	//	mockRepo.On("PutConfiguration", context.Background(), &domain.Config{Name: "error-config", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1}).Return(nil, domain.ErrDataNotFound)
+	mockRepo.On("PutConfiguration", context.Background(), &domain.Config{Name: "test-config", Type: "person", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1}).Return(&domain.Config{Name: "test-config", Version: 1}, nil)
 
-	config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "test-config", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1})
+	config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "test-config", Type: "person", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1})
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	}
 	if config.Name != "test-config" || config.Version != 1 {
 		t.Fatalf("expected config with name 'test-config' and version 1, got %v", config)
 	}
-
-	/*
-		t.Run("Success", func(t *testing.T) {
-			config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "test-config", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1})
-			if err != nil {
-				t.Fatalf("expected no error, got %v", err)
-			}
-			if config.Name != "test-config" || config.Version != 1 {
-				t.Fatalf("expected config with name 'test-config' and version 1, got %v", config)
-			}
-		})
-	*/
-
-	/*
-		t.Run("Invalid Schema", func(t *testing.T) {
-			config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "test-config", Value: map[string]interface{}{"name": "John"}, Version: 1})
-			if config != nil || err == nil {
-				t.Fatalf("expected error, got config: %v, error: %v", config, err)
-			}
-
-			if err != domain.ErrInvalidSchema {
-				t.Fatalf("expected error %v, got %v", domain.ErrDataNotFound, err)
-			}
-		})
-
-		t.Run("Error", func(t *testing.T) {
-			config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "error-config", Value: map[string]interface{}{"name": "John"}, Version: 1})
-			if config != nil || err == nil {
-				t.Fatalf("expected error, got config: %v, error: %v", config, err)
-			}
-
-			if err != domain.ErrDataNotFound {
-				t.Fatalf("expected error %v, got %v", domain.ErrDataNotFound, err)
-			}
-		})
-	*/
 }
 
-func TestPutConfigurationInvalidSchema(t *testing.T) {
+func TestPutConfigurationUkknownType(t *testing.T) {
 	mockRepo := port.NewMockConfigurationRepository(t)
 
 	configurationService := NewConfigurationService(mockRepo)
 
-	config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "test-config", Value: map[string]interface{}{"name": "John"}, Version: 1})
+	config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "test-config", Type: "unknown-schema", Value: map[string]interface{}{"name": "John"}, Version: 1})
+	if config != nil || err == nil {
+		t.Fatalf("expected error, got config: %v, error: %v", config, err)
+	}
+
+	if err != domain.ErrInvalidSchema {
+		t.Fatalf("expected error %v, got %v", domain.ErrDataNotFound, err)
+	}
+}
+
+func TestPutConfigurationInvalidValue(t *testing.T) {
+	mockRepo := port.NewMockConfigurationRepository(t)
+
+	configurationService := NewConfigurationService(mockRepo)
+
+	config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "test-config", Type: "person", Value: map[string]interface{}{"name": "John"}, Version: 1})
 	if config != nil || err == nil {
 		t.Fatalf("expected error, got config: %v, error: %v", config, err)
 	}
@@ -81,10 +59,9 @@ func TestPutConfigurationError(t *testing.T) {
 
 	configurationService := NewConfigurationService(mockRepo)
 
-	//mockRepo.On("PutConfiguration", context.Background(), &domain.Config{Name: "test-config", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1}).Return(&domain.Config{Name: "test-config", Version: 1}, nil)
-	mockRepo.On("PutConfiguration", context.Background(), &domain.Config{Name: "error-config", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1}).Return(nil, domain.ErrDataNotFound)
+	mockRepo.On("PutConfiguration", context.Background(), &domain.Config{Name: "error-config", Type: "person", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1}).Return(nil, domain.ErrDataNotFound)
 
-	config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "error-config", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1})
+	config, err := configurationService.PutConfiguration(context.Background(), &domain.Config{Name: "error-config", Type: "person", Value: map[string]interface{}{"name": "John", "age": 25}, Version: 1})
 	if config != nil || err == nil {
 		t.Fatalf("expected error, got config: %v, error: %v", config, err)
 	}

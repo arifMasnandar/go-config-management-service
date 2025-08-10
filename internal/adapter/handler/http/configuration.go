@@ -62,6 +62,7 @@ func (ch *ConfigurationHandler) PutConfiguration(ctx *gin.Context) {
 
 	config := &domain.Config{
 		Name:  reqUri.Name,
+		Type:  reqJson.Type,
 		Value: reqJson.Value,
 	}
 

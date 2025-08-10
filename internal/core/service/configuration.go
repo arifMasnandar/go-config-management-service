@@ -18,16 +18,12 @@ type ConfigurationServicer interface {
 }
 
 type configurationService struct {
-	repo port.ConfigurationRepository
+	repo    port.ConfigurationRepository
+	schemas map[string]*jsonschema.Schema
 }
 
 func NewConfigurationService(repo port.ConfigurationRepository) ConfigurationServicer {
-	return &configurationService{
-		repo,
-	}
-}
-
-func (s *configurationService) PutConfiguration(ctx context.Context, config *domain.Config) (*domain.Config, error) {
+	schemas := make(map[string]*jsonschema.Schema)
 
 	// Compile schema
 	compiler := jsonschema.NewCompiler()
@@ -40,7 +36,23 @@ func (s *configurationService) PutConfiguration(ctx context.Context, config *dom
 			    "required": ["name","age"]
 			}`))
 	if err != nil {
-		return nil, err
+		panic(err) // Handle schema compilation error
+	}
+
+	schemas["person"] = schema
+
+	return &configurationService{
+		repo,
+		schemas,
+	}
+}
+
+func (s *configurationService) PutConfiguration(ctx context.Context, config *domain.Config) (*domain.Config, error) {
+
+	schema, ok := s.schemas[config.Type]
+
+	if !ok {
+		return nil, domain.ErrInvalidSchema // Schema not found for the config type
 	}
 
 	result := schema.ValidateMap(config.Value)
