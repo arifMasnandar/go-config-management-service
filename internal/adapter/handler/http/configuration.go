@@ -23,8 +23,9 @@ type putConfigurationRequestUri struct {
 }
 
 type putConfigurationRequestJson struct {
-	Type  string `json:"type" example:"config_type"`
-	Value string `json:"value" binding:"required" example:"config_value"`
+	Type      string                 `json:"type" binding:"required" example:"config_type"`
+	Value     string                 `json:"value" binding:"required" example:"config_value"`
+	JsonValue map[string]interface{} `json:"json_value" swaggertype:"object,string" binding:"required"`
 }
 
 // PutConfiguration godoc
@@ -61,8 +62,9 @@ func (ch *ConfigurationHandler) PutConfiguration(ctx *gin.Context) {
 	}
 
 	config := &domain.Config{
-		Name:  reqUri.Name,
-		Value: reqJson.Value,
+		Name:      reqUri.Name,
+		Value:     reqJson.Value,
+		JsonValue: reqJson.JsonValue,
 	}
 
 	createdConfig, err := ch.svc.PutConfiguration(ctx, config)

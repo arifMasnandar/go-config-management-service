@@ -5,6 +5,10 @@ definitions:
         description: Optional field for creation timestamp
         example: "2023-10-01T12:00:00Z"
         type: string
+      json_value:
+        additionalProperties:
+          type: string
+        type: object
       name:
         example: app_config
         type: string
@@ -34,6 +38,10 @@ definitions:
     type: object
   http.putConfigurationRequestJson:
     properties:
+      json_value:
+        additionalProperties:
+          type: string
+        type: object
       type:
         example: config_type
         type: string
@@ -41,6 +49,8 @@ definitions:
         example: config_value
         type: string
     required:
+    - json_value
+    - type
     - value
     type: object
 info:

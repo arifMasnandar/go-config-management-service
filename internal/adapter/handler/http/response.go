@@ -44,17 +44,19 @@ func newMeta(total, limit, skip uint64) meta {
 }
 
 type configurationResponse struct {
-	Name              string    `json:"name" example:"app_config"`
-	Value             string    `json:"value" example:"config_value"`
-	Version           int       `json:"version" example:"1"`
-	RollbackedVersion int       `json:"rollbacked_version,omitempty" example:"0"`            // Optional field for copied version
-	CreatedAt         time.Time `json:"created_at,omitempty" example:"2023-10-01T12:00:00Z"` // Optional field for creation timestamp
+	Name              string                 `json:"name" example:"app_config"`
+	Value             string                 `json:"value" example:"config_value"`
+	JsonValue         map[string]interface{} `json:"json_value" swaggertype:"object,string"`
+	Version           int                    `json:"version" example:"1"`
+	RollbackedVersion int                    `json:"rollbacked_version,omitempty" example:"0"`            // Optional field for copied version
+	CreatedAt         time.Time              `json:"created_at,omitempty" example:"2023-10-01T12:00:00Z"` // Optional field for creation timestamp
 }
 
 func newConfigResponse(config *domain.Config) configurationResponse {
 	return configurationResponse{
 		Name:              config.Name,
 		Value:             config.Value,
+		JsonValue:         config.JsonValue,
 		Version:           config.Version,
 		RollbackedVersion: config.RollbackedVersion,
 		CreatedAt:         config.CreatedAt,

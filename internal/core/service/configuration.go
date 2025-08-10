@@ -2,9 +2,12 @@ package service
 
 import (
 	"context"
+	"fmt"
+	"log"
 
 	"example.com/go-config-management-service/internal/core/domain"
 	"example.com/go-config-management-service/internal/core/port"
+	"github.com/kaptinlin/jsonschema"
 )
 
 type ConfigurationServicer interface {
@@ -27,6 +30,33 @@ func NewConfigurationService(repo port.ConfigurationRepository) ConfigurationSer
 }
 
 func (s *configurationService) PutConfiguration(ctx context.Context, config *domain.Config) (*domain.Config, error) {
+
+	// Compile schema
+	compiler := jsonschema.NewCompiler()
+	schema, err := compiler.Compile([]byte(`{
+			    "type": "object",
+			    "properties": {
+			        "name": {"type": "string", "minLength": 1},
+			        "age": {"type": "integer", "minimum": 0}
+			    },
+			    "required": ["name"]
+			}`))
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
+	}
+
+	result := schema.ValidateMap(config.JsonValue)
+	if result.IsValid() {
+		fmt.Println("✅ Valid")
+	} else {
+		fmt.Println("❌ Invalid")
+		for field, err := range result.Errors {
+			fmt.Printf("- %s: %s\n", field, err.Message)
+		}
+		return nil, domain.ErrInvalidToken
+	}
+
 	return s.repo.PutConfiguration(ctx, config)
 }
 
