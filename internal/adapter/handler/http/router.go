@@ -42,6 +42,7 @@ func NewRouter(
 
 	configuration := router.Group("/configs")
 	{
+		configuration.GET("", configurationHandler.ListConfigurations)
 		configuration.GET("/", configurationHandler.ListConfigurations)
 		configuration.PUT("/:name", configurationHandler.PutConfiguration)
 		configuration.GET("/:name", configurationHandler.GetConfiguration)

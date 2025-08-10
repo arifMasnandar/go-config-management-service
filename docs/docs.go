@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/configs": {
+        "/configs/": {
             "get": {
                 "security": [
                     {
@@ -511,6 +511,10 @@ const docTemplate = `{
                     "description": "Optional field for copied version",
                     "type": "integer",
                     "example": 0
+                },
+                "type": {
+                    "type": "string",
+                    "example": "person"
                 },
                 "value": {
                     "type": "object",

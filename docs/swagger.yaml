@@ -12,6 +12,9 @@ definitions:
         description: Optional field for copied version
         example: 0
         type: integer
+      type:
+        example: person
+        type: string
       value:
         additionalProperties:
           type: string
@@ -49,7 +52,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /configs:
+  /configs/:
     get:
       consumes:
       - application/json

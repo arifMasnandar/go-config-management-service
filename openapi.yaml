@@ -1,0 +1,435 @@
+openapi: 3.0.1
+info:
+  title: ""
+  description: ""
+  contact: {}
+  version: ""
+servers:
+- url: http://localhost:8080/
+paths:
+  /configs/:
+    get:
+      tags:
+      - Configurations
+      summary: Retrieve configuration list
+      description: Retrieve a list configurations with pagination support.
+      parameters:
+      - name: skip
+        in: query
+        description: Starting offset
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Page size
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Configuration found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.configurationResponse'
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "403":
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "404":
+          description: Data not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "409":
+          description: Data conflict error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+  /configs/{name}:
+    get:
+      tags:
+      - Configurations
+      summary: Retrieve the latest version of a configuration
+      description: Retrieve the latest version of a configuration by its name
+      parameters:
+      - name: name
+        in: path
+        description: Configuration name
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Configuration found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.configurationResponse'
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "403":
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "404":
+          description: Data not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "409":
+          description: Data conflict error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+    put:
+      tags:
+      - Configurations
+      summary: Create a new configuration or replace an existing one
+      description: "Create a new configuration with the specified name and value,\
+        \ or replace an existing"
+      parameters:
+      - name: name
+        in: path
+        description: Configuration name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Create or Replace Configuration request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/http.putConfigurationRequestJson'
+        required: true
+      responses:
+        "200":
+          description: Configuration created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.configurationResponse'
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "403":
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "404":
+          description: Data not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "409":
+          description: Data conflict error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+      x-codegen-request-body-name: createCategoryRequest
+  /configs/{name}/versions:
+    get:
+      tags:
+      - Configurations
+      summary: Retrieve a historical version list of a configuration
+      description: Retrieve a historical version list of a configuration by its name
+      parameters:
+      - name: name
+        in: path
+        description: Configuration name
+        required: true
+        schema:
+          type: string
+      - name: skip
+        in: query
+        description: Starting offset
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Page size
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Configuration found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.configurationResponse'
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "403":
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "404":
+          description: Data not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "409":
+          description: Data conflict error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+  /configs/{name}/versions/{version}:
+    get:
+      tags:
+      - Configurations
+      summary: Retrieve a particular version of a configuration
+      description: Retrieve a particular version of a configuration by its name and
+        version number
+      parameters:
+      - name: name
+        in: path
+        description: Configuration name
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        description: Configuration name
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Configuration found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.configurationResponse'
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "403":
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "404":
+          description: Data not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "409":
+          description: Data conflict error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+  /configs/{name}/versions/{version}/rollback:
+    post:
+      tags:
+      - Configurations
+      summary: Rollback a configuration to a previous version
+      description: Rollback a configuration to a previous version
+      parameters:
+      - name: name
+        in: path
+        description: Configuration name
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        description: Configuration name
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Configuration rolled back
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.configurationResponse'
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "403":
+          description: Forbidden error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "404":
+          description: Data not found error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "409":
+          description: Data conflict error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/http.errorResponse'
+components:
+  schemas:
+    http.configurationResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+          description: Optional field for creation timestamp
+          example: 2023-10-01T12:00:00Z
+        name:
+          type: string
+          example: app_config
+        rollbacked_version:
+          type: integer
+          description: Optional field for copied version
+          example: 0
+        type:
+          type: string
+          example: person
+        value:
+          type: object
+          additionalProperties:
+            type: string
+        version:
+          type: integer
+          example: 1
+    http.errorResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          example:
+          - Error message 1
+          - ' Error message 2'
+          items:
+            type: string
+        success:
+          type: boolean
+          example: false
+    http.putConfigurationRequestJson:
+      required:
+      - type
+      - value
+      type: object
+      properties:
+        type:
+          type: string
+          example: config_type
+        value:
+          type: object
+          additionalProperties:
+            type: string
+x-original-swagger-version: "2.0"

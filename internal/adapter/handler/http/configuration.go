@@ -137,7 +137,7 @@ type listConfigurationsRequest struct {
 //	@Failure		404		{object}	errorResponse			"Data not found error"
 //	@Failure		409		{object}	errorResponse			"Data conflict error"
 //	@Failure		500		{object}	errorResponse			"Internal server error"
-//	@Router			/configs [get]
+//	@Router			/configs/ [get]
 //	@Security		BearerAuth
 func (ch *ConfigurationHandler) ListConfigurations(ctx *gin.Context) {
 	var req listConfigurationsRequest
