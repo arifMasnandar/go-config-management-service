@@ -2,6 +2,7 @@ package memory
 
 import (
 	"context"
+	"reflect"
 	"testing"
 	"time"
 
@@ -26,7 +27,7 @@ func TestEmptyConfigurations(t *testing.T) {
 
 	config := &domain.Config{
 		Name:  "test_config",
-		Value: "test_value",
+		Value: map[string]interface{}{"name": "John"},
 	}
 
 	// Get configuration
@@ -73,7 +74,7 @@ func TestPutConfiguration(t *testing.T) {
 	repo := NewConfigurationRepository()
 	config := &domain.Config{
 		Name:  "test_config",
-		Value: "test_value",
+		Value: map[string]interface{}{"name": "John"},
 	}
 
 	t1 := time.Now()
@@ -190,7 +191,7 @@ func TestReplaceConfiguration(t *testing.T) {
 	repo := NewConfigurationRepository()
 	config := &domain.Config{
 		Name:  "test_config",
-		Value: "initial_value",
+		Value: map[string]interface{}{"name": "John"},
 	}
 
 	// Put initial configuration
@@ -201,7 +202,8 @@ func TestReplaceConfiguration(t *testing.T) {
 
 	t1 := time.Now()
 	// Update configuration
-	config.Value = "updated_value"
+	config.Value = map[string]interface{}{"name": "John II"}
+
 	updatedConfig, err := repo.PutConfiguration(context.Background(), config)
 	if err != nil {
 		t.Fatalf("Failed to update configuration: %v", err)
@@ -219,11 +221,11 @@ func TestReplaceConfiguration(t *testing.T) {
 	}
 }
 
-func validateConfig(t *testing.T, config *domain.Config, expectedName, expectedValue string, expectedVersion int, expectedCreatedAtAfter time.Time, expectedCreatedAtBefore time.Time) {
+func validateConfig(t *testing.T, config *domain.Config, expectedName string, expectedValue map[string]interface{}, expectedVersion int, expectedCreatedAtAfter time.Time, expectedCreatedAtBefore time.Time) {
 	if config.Name != expectedName {
 		t.Errorf("Expected Name %s, got %s", expectedName, config.Name)
 	}
-	if config.Value != expectedValue {
+	if reflect.DeepEqual(config.Value, expectedValue) == false {
 		t.Errorf("Expected Value %s, got %s", expectedValue, config.Value)
 	}
 	if config.Version != expectedVersion {

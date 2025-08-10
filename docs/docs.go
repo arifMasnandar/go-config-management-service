@@ -503,12 +503,6 @@ const docTemplate = `{
                     "type": "string",
                     "example": "2023-10-01T12:00:00Z"
                 },
-                "json_value": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
                 "name": {
                     "type": "string",
                     "example": "app_config"
@@ -519,8 +513,10 @@ const docTemplate = `{
                     "example": 0
                 },
                 "value": {
-                    "type": "string",
-                    "example": "config_value"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "version": {
                     "type": "integer",
@@ -550,24 +546,19 @@ const docTemplate = `{
         "http.putConfigurationRequestJson": {
             "type": "object",
             "required": [
-                "json_value",
                 "type",
                 "value"
             ],
             "properties": {
-                "json_value": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
                 "type": {
                     "type": "string",
                     "example": "config_type"
                 },
                 "value": {
-                    "type": "string",
-                    "example": "config_value"
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 }
             }
         }

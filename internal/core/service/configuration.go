@@ -2,8 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
-	"log"
 
 	"example.com/go-config-management-service/internal/core/domain"
 	"example.com/go-config-management-service/internal/core/port"
@@ -39,22 +37,20 @@ func (s *configurationService) PutConfiguration(ctx context.Context, config *dom
 			        "name": {"type": "string", "minLength": 1},
 			        "age": {"type": "integer", "minimum": 0}
 			    },
-			    "required": ["name"]
+			    "required": ["name","age"]
 			}`))
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
 
-	result := schema.ValidateMap(config.JsonValue)
-	if result.IsValid() {
-		fmt.Println("✅ Valid")
-	} else {
-		fmt.Println("❌ Invalid")
-		for field, err := range result.Errors {
-			fmt.Printf("- %s: %s\n", field, err.Message)
-		}
-		return nil, domain.ErrInvalidToken
+	result := schema.ValidateMap(config.Value)
+	if !result.IsValid() {
+		/*
+			for field, err := range result.Errors {
+				fmt.Printf("- %s: %s\n", field, err.Message)
+			}
+		*/
+		return nil, domain.ErrInvalidSchema
 	}
 
 	return s.repo.PutConfiguration(ctx, config)

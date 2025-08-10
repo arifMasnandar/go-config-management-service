@@ -37,4 +37,6 @@ var (
 	ErrUnauthorized = errors.New("user is unauthorized to access the resource")
 	// ErrForbidden is an error for when the user is forbidden to access the resource
 	ErrForbidden = errors.New("user is forbidden to access the resource")
+	// ErrInvalidSchema is an error for when the schema validation fails
+	ErrInvalidSchema = errors.New("invalid schema")
 )
