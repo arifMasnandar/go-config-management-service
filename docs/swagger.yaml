@@ -1,0 +1,361 @@
+definitions:
+  http.configurationResponse:
+    properties:
+      created_at:
+        description: Optional field for creation timestamp
+        example: "2023-10-01T12:00:00Z"
+        type: string
+      name:
+        example: app_config
+        type: string
+      rollbacked_version:
+        description: Optional field for copied version
+        example: 0
+        type: integer
+      value:
+        example: config_value
+        type: string
+      version:
+        example: 1
+        type: integer
+    type: object
+  http.errorResponse:
+    properties:
+      messages:
+        example:
+        - Error message 1
+        - ' Error message 2'
+        items:
+          type: string
+        type: array
+      success:
+        example: false
+        type: boolean
+    type: object
+  http.putConfigurationRequestJson:
+    properties:
+      type:
+        example: config_type
+        type: string
+      value:
+        example: config_value
+        type: string
+    required:
+    - value
+    type: object
+info:
+  contact: {}
+paths:
+  /configs:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list configurations with pagination support.
+      parameters:
+      - description: Starting offset
+        in: query
+        name: skip
+        type: integer
+      - description: Page size
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Configuration found
+          schema:
+            $ref: '#/definitions/http.configurationResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "403":
+          description: Forbidden error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Data not found error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "409":
+          description: Data conflict error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Retrieve configuration list
+      tags:
+      - Configurations
+  /configs/{name}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the latest version of a configuration by its name
+      parameters:
+      - description: Configuration name
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Configuration found
+          schema:
+            $ref: '#/definitions/http.configurationResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "403":
+          description: Forbidden error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Data not found error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "409":
+          description: Data conflict error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Retrieve the latest version of a configuration
+      tags:
+      - Configurations
+    put:
+      consumes:
+      - application/json
+      description: Create a new configuration with the specified name and value, or
+        replace an existing
+      parameters:
+      - description: Configuration name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Create or Replace Configuration request
+        in: body
+        name: createCategoryRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.putConfigurationRequestJson'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Configuration created
+          schema:
+            $ref: '#/definitions/http.configurationResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "403":
+          description: Forbidden error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Data not found error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "409":
+          description: Data conflict error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new configuration or replace an existing one
+      tags:
+      - Configurations
+  /configs/{name}/versions:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a historical version list of a configuration by its name
+      parameters:
+      - description: Configuration name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Starting offset
+        in: query
+        name: skip
+        type: integer
+      - description: Page size
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Configuration found
+          schema:
+            $ref: '#/definitions/http.configurationResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "403":
+          description: Forbidden error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Data not found error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "409":
+          description: Data conflict error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Retrieve a historical version list of a configuration
+      tags:
+      - Configurations
+  /configs/{name}/versions/{version}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a particular version of a configuration by its name and
+        version number
+      parameters:
+      - description: Configuration name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Configuration name
+        in: path
+        name: version
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Configuration found
+          schema:
+            $ref: '#/definitions/http.configurationResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "403":
+          description: Forbidden error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Data not found error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "409":
+          description: Data conflict error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Retrieve a particular version of a configuration
+      tags:
+      - Configurations
+  /configs/{name}/versions/{version}/rollback:
+    post:
+      consumes:
+      - application/json
+      description: Rollback a configuration to a previous version
+      parameters:
+      - description: Configuration name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Configuration name
+        in: path
+        name: version
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Configuration rolled back
+          schema:
+            $ref: '#/definitions/http.configurationResponse'
+        "400":
+          description: Validation error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "401":
+          description: Unauthorized error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "403":
+          description: Forbidden error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "404":
+          description: Data not found error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "409":
+          description: Data conflict error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Rollback a configuration to a previous version
+      tags:
+      - Configurations
+swagger: "2.0"

@@ -1,0 +1,550 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/configs": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a list configurations with pagination support.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configurations"
+                ],
+                "summary": "Retrieve configuration list",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Starting offset",
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Configuration found",
+                        "schema": {
+                            "$ref": "#/definitions/http.configurationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Data conflict error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/configs/{name}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve the latest version of a configuration by its name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configurations"
+                ],
+                "summary": "Retrieve the latest version of a configuration",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Configuration name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Configuration found",
+                        "schema": {
+                            "$ref": "#/definitions/http.configurationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Data conflict error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new configuration with the specified name and value, or replace an existing",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configurations"
+                ],
+                "summary": "Create a new configuration or replace an existing one",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Configuration name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Create or Replace Configuration request",
+                        "name": "createCategoryRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.putConfigurationRequestJson"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Configuration created",
+                        "schema": {
+                            "$ref": "#/definitions/http.configurationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Data conflict error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/configs/{name}/versions": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a historical version list of a configuration by its name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configurations"
+                ],
+                "summary": "Retrieve a historical version list of a configuration",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Configuration name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Starting offset",
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Configuration found",
+                        "schema": {
+                            "$ref": "#/definitions/http.configurationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Data conflict error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/configs/{name}/versions/{version}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Retrieve a particular version of a configuration by its name and version number",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configurations"
+                ],
+                "summary": "Retrieve a particular version of a configuration",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Configuration name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Configuration name",
+                        "name": "version",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Configuration found",
+                        "schema": {
+                            "$ref": "#/definitions/http.configurationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Data conflict error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/configs/{name}/versions/{version}/rollback": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Rollback a configuration to a previous version",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Configurations"
+                ],
+                "summary": "Rollback a configuration to a previous version",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Configuration name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Configuration name",
+                        "name": "version",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Configuration rolled back",
+                        "schema": {
+                            "$ref": "#/definitions/http.configurationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Data conflict error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/http.errorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "http.configurationResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "Optional field for creation timestamp",
+                    "type": "string",
+                    "example": "2023-10-01T12:00:00Z"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "app_config"
+                },
+                "rollbacked_version": {
+                    "description": "Optional field for copied version",
+                    "type": "integer",
+                    "example": 0
+                },
+                "value": {
+                    "type": "string",
+                    "example": "config_value"
+                },
+                "version": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "http.errorResponse": {
+            "type": "object",
+            "properties": {
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Error message 1",
+                        " Error message 2"
+                    ]
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "http.putConfigurationRequestJson": {
+            "type": "object",
+            "required": [
+                "value"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "example": "config_type"
+                },
+                "value": {
+                    "type": "string",
+                    "example": "config_value"
+                }
+            }
+        }
+    }
+}

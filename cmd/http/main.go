@@ -9,6 +9,8 @@ import (
 	"example.com/go-config-management-service/internal/adapter/handler/http"
 	"example.com/go-config-management-service/internal/adapter/storage/memory"
 	"example.com/go-config-management-service/internal/core/service"
+
+	_ "example.com/go-config-management-service/docs"
 )
 
 func main() {

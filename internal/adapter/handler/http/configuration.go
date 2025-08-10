@@ -23,9 +23,28 @@ type putConfigurationRequestUri struct {
 }
 
 type putConfigurationRequestJson struct {
+	Type  string `json:"type" example:"config_type"`
 	Value string `json:"value" binding:"required" example:"config_value"`
 }
 
+// PutConfiguration godoc
+//
+//	@Summary		Create a new configuration or replace an existing one
+//	@Description	Create a new configuration with the specified name and value, or replace an existing
+//	@Tags			Configurations
+//	@Accept			json
+//	@Produce		json
+//	@Param			name					path		string						true	"Configuration name"	example:"app_config"
+//	@Param			createCategoryRequest	body		putConfigurationRequestJson	true	"Create or Replace Configuration request"
+//	@Success		200						{object}	configurationResponse		"Configuration created"
+//	@Failure		400						{object}	errorResponse				"Validation error"
+//	@Failure		401						{object}	errorResponse				"Unauthorized error"
+//	@Failure		403						{object}	errorResponse				"Forbidden error"
+//	@Failure		404						{object}	errorResponse				"Data not found error"
+//	@Failure		409						{object}	errorResponse				"Data conflict error"
+//	@Failure		500						{object}	errorResponse				"Internal server error"
+//	@Router			/configs/{name} [put]
+//	@Security		BearerAuth
 func (ch *ConfigurationHandler) PutConfiguration(ctx *gin.Context) {
 	var reqUri putConfigurationRequestUri
 
@@ -61,6 +80,23 @@ type getConfigurationRequest struct {
 	Name string `uri:"name" binding:"required" example:"app_config"`
 }
 
+// GetConfiguration godoc
+//
+//	@Summary		Retrieve the latest version of a configuration
+//	@Description	Retrieve the latest version of a configuration by its name
+//	@Tags			Configurations
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
+//	@Success		200		{object}	configurationResponse	"Configuration found"
+//	@Failure		400		{object}	errorResponse			"Validation error"
+//	@Failure		401		{object}	errorResponse			"Unauthorized error"
+//	@Failure		403		{object}	errorResponse			"Forbidden error"
+//	@Failure		404		{object}	errorResponse			"Data not found error"
+//	@Failure		409		{object}	errorResponse			"Data conflict error"
+//	@Failure		500		{object}	errorResponse			"Internal server error"
+//	@Router			/configs/{name} [get]
+//	@Security		BearerAuth
 func (ch *ConfigurationHandler) GetConfiguration(ctx *gin.Context) {
 	var req getConfigurationRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
@@ -84,6 +120,24 @@ type listConfigurationsRequest struct {
 	Limit uint64 `form:"limit" binding:"min=1,max=100" example:"5"`
 }
 
+// ListConfigurations godoc
+//
+//	@Summary		Retrieve configuration list
+//	@Description	Retrieve a list configurations with pagination support.
+//	@Tags			Configurations
+//	@Accept			json
+//	@Produce		json
+//	@Param			skip	query		int						false	"Starting offset"	example:"0"
+//	@Param			limit	query		int						true	"Page size"			example:"5"
+//	@Success		200		{object}	configurationResponse	"Configuration found"
+//	@Failure		400		{object}	errorResponse			"Validation error"
+//	@Failure		401		{object}	errorResponse			"Unauthorized error"
+//	@Failure		403		{object}	errorResponse			"Forbidden error"
+//	@Failure		404		{object}	errorResponse			"Data not found error"
+//	@Failure		409		{object}	errorResponse			"Data conflict error"
+//	@Failure		500		{object}	errorResponse			"Internal server error"
+//	@Router			/configs [get]
+//	@Security		BearerAuth
 func (ch *ConfigurationHandler) ListConfigurations(ctx *gin.Context) {
 	var req listConfigurationsRequest
 	var configsList []configurationResponse
@@ -115,6 +169,24 @@ type getConfigurationVersionRequest struct {
 	Version int    `uri:"version" binding:"required" example:"1"`
 }
 
+// GetConfigurationVersion godoc
+//
+//	@Summary		Retrieve a particular version of a configuration
+//	@Description	Retrieve a particular version of a configuration by its name and version number
+//	@Tags			Configurations
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
+//	@Param			version	path		int						true	"Configuration name"	example:"1"
+//	@Success		200		{object}	configurationResponse	"Configuration found"
+//	@Failure		400		{object}	errorResponse			"Validation error"
+//	@Failure		401		{object}	errorResponse			"Unauthorized error"
+//	@Failure		403		{object}	errorResponse			"Forbidden error"
+//	@Failure		404		{object}	errorResponse			"Data not found error"
+//	@Failure		409		{object}	errorResponse			"Data conflict error"
+//	@Failure		500		{object}	errorResponse			"Internal server error"
+//	@Router			/configs/{name}/versions/{version} [get]
+//	@Security		BearerAuth
 func (ch *ConfigurationHandler) GetConfigurationVersion(ctx *gin.Context) {
 	var req getConfigurationVersionRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
@@ -139,6 +211,26 @@ type listConfigurationVersionsRequestForm struct {
 	Limit uint64 `form:"limit" binding:"min=5,max=100" example:"5"`
 }
 
+// ListConfigurationVersions godoc
+//
+//	@Summary		Retrieve a historical version list of a configuration
+//	@Description	Retrieve a historical version list of a configuration by its name
+//	@Tags			Configurations
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
+//	@Param			skip	query		int						false	"Starting offset"		example:"0"
+//	@Param			limit	query		int						true	"Page size"				example:"5"
+//
+//	@Success		200		{object}	configurationResponse	"Configuration found"
+//	@Failure		400		{object}	errorResponse			"Validation error"
+//	@Failure		401		{object}	errorResponse			"Unauthorized error"
+//	@Failure		403		{object}	errorResponse			"Forbidden error"
+//	@Failure		404		{object}	errorResponse			"Data not found error"
+//	@Failure		409		{object}	errorResponse			"Data conflict error"
+//	@Failure		500		{object}	errorResponse			"Internal server error"
+//	@Router			/configs/{name}/versions [get]
+//	@Security		BearerAuth
 func (ch *ConfigurationHandler) ListConfigurationVersions(ctx *gin.Context) {
 	var reqUri listConfigurationVersionsRequestUri
 	if err := ctx.ShouldBindUri(&reqUri); err != nil {
@@ -175,6 +267,24 @@ type rollbackConfigurationVersionRequest struct {
 	Version int    `uri:"version" binding:"required" example:"1"`
 }
 
+// RollbackConfigurationVersion godoc
+//
+//	@Summary		Rollback a configuration to a previous version
+//	@Description	Rollback a configuration to a previous version
+//	@Tags			Configurations
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
+//	@Param			version	path		int						true	"Configuration name"	example:"1"
+//	@Success		200		{object}	configurationResponse	"Configuration rolled back"
+//	@Failure		400		{object}	errorResponse			"Validation error"
+//	@Failure		401		{object}	errorResponse			"Unauthorized error"
+//	@Failure		403		{object}	errorResponse			"Forbidden error"
+//	@Failure		404		{object}	errorResponse			"Data not found error"
+//	@Failure		409		{object}	errorResponse			"Data conflict error"
+//	@Failure		500		{object}	errorResponse			"Internal server error"
+//	@Router			/configs/{name}/versions/{version}/rollback [post]
+//	@Security		BearerAuth
 func (ch *ConfigurationHandler) RollbackConfigurationVersion(ctx *gin.Context) {
 	var req rollbackConfigurationVersionRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
