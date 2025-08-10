@@ -39,7 +39,7 @@ definitions:
   http.putConfigurationRequestJson:
     properties:
       type:
-        example: config_type
+        example: person
         type: string
       value:
         additionalProperties:
@@ -52,7 +52,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /configs/:
+  /cms/configs:
     get:
       consumes:
       - application/json
@@ -103,7 +103,7 @@ paths:
       summary: Retrieve configuration list
       tags:
       - Configurations
-  /configs/{name}:
+  /cms/configs/{name}:
     get:
       consumes:
       - application/json
@@ -203,7 +203,7 @@ paths:
       summary: Create a new configuration or replace an existing one
       tags:
       - Configurations
-  /configs/{name}/versions:
+  /cms/configs/{name}/versions:
     get:
       consumes:
       - application/json
@@ -259,7 +259,7 @@ paths:
       summary: Retrieve a historical version list of a configuration
       tags:
       - Configurations
-  /configs/{name}/versions/{version}:
+  /cms/configs/{name}/versions/{version}:
     get:
       consumes:
       - application/json
@@ -271,7 +271,7 @@ paths:
         name: name
         required: true
         type: string
-      - description: Configuration name
+      - description: Version Number
         in: path
         name: version
         required: true
@@ -312,7 +312,7 @@ paths:
       summary: Retrieve a particular version of a configuration
       tags:
       - Configurations
-  /configs/{name}/versions/{version}/rollback:
+  /cms/configs/{name}/versions/{version}/rollback:
     post:
       consumes:
       - application/json
@@ -323,7 +323,7 @@ paths:
         name: name
         required: true
         type: string
-      - description: Configuration name
+      - description: Version Number
         in: path
         name: version
         required: true

@@ -4,7 +4,7 @@
         "contact": {}
     },
     "paths": {
-        "/configs/": {
+        "/cms/configs": {
             "get": {
                 "security": [
                     {
@@ -83,7 +83,7 @@
                 }
             }
         },
-        "/configs/{name}": {
+        "/cms/configs/{name}": {
             "get": {
                 "security": [
                     {
@@ -236,7 +236,7 @@
                 }
             }
         },
-        "/configs/{name}/versions": {
+        "/cms/configs/{name}/versions": {
             "get": {
                 "security": [
                     {
@@ -322,7 +322,7 @@
                 }
             }
         },
-        "/configs/{name}/versions/{version}": {
+        "/cms/configs/{name}/versions/{version}": {
             "get": {
                 "security": [
                     {
@@ -350,7 +350,7 @@
                     },
                     {
                         "type": "integer",
-                        "description": "Configuration name",
+                        "description": "Version Number",
                         "name": "version",
                         "in": "path",
                         "required": true
@@ -402,7 +402,7 @@
                 }
             }
         },
-        "/configs/{name}/versions/{version}/rollback": {
+        "/cms/configs/{name}/versions/{version}/rollback": {
             "post": {
                 "security": [
                     {
@@ -430,7 +430,7 @@
                     },
                     {
                         "type": "integer",
-                        "description": "Configuration name",
+                        "description": "Version Number",
                         "name": "version",
                         "in": "path",
                         "required": true
@@ -545,7 +545,7 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "example": "config_type"
+                    "example": "person"
                 },
                 "value": {
                     "type": "object",

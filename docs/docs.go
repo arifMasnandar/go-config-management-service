@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/configs/": {
+        "/cms/configs": {
             "get": {
                 "security": [
                     {
@@ -94,7 +94,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/configs/{name}": {
+        "/cms/configs/{name}": {
             "get": {
                 "security": [
                     {
@@ -247,7 +247,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/configs/{name}/versions": {
+        "/cms/configs/{name}/versions": {
             "get": {
                 "security": [
                     {
@@ -333,7 +333,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/configs/{name}/versions/{version}": {
+        "/cms/configs/{name}/versions/{version}": {
             "get": {
                 "security": [
                     {
@@ -361,7 +361,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Configuration name",
+                        "description": "Version Number",
                         "name": "version",
                         "in": "path",
                         "required": true
@@ -413,7 +413,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/configs/{name}/versions/{version}/rollback": {
+        "/cms/configs/{name}/versions/{version}/rollback": {
             "post": {
                 "security": [
                     {
@@ -441,7 +441,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Configuration name",
+                        "description": "Version Number",
                         "name": "version",
                         "in": "path",
                         "required": true
@@ -556,7 +556,7 @@ const docTemplate = `{
             "properties": {
                 "type": {
                     "type": "string",
-                    "example": "config_type"
+                    "example": "person"
                 },
                 "value": {
                     "type": "object",

@@ -19,11 +19,11 @@ func NewConfigurationHandler(svc service.ConfigurationServicer) *ConfigurationHa
 }
 
 type putConfigurationRequestUri struct {
-	Name string `uri:"name" binding:"required" example:"app_config"`
+	Name string `uri:"name" binding:"required" example:"person_config"`
 }
 
 type putConfigurationRequestJson struct {
-	Type  string                 `json:"type" binding:"required" example:"config_type"`
+	Type  string                 `json:"type" binding:"required" example:"person"`
 	Value map[string]interface{} `json:"value" swaggertype:"object,string" binding:"required"`
 }
 
@@ -34,7 +34,7 @@ type putConfigurationRequestJson struct {
 //	@Tags			Configurations
 //	@Accept			json
 //	@Produce		json
-//	@Param			name					path		string						true	"Configuration name"	example:"app_config"
+//	@Param			name					path		string						true	"Configuration name"	example:"person_config"
 //	@Param			createCategoryRequest	body		putConfigurationRequestJson	true	"Create or Replace Configuration request"
 //	@Success		200						{object}	configurationResponse		"Configuration created"
 //	@Failure		400						{object}	errorResponse				"Validation error"
@@ -43,7 +43,7 @@ type putConfigurationRequestJson struct {
 //	@Failure		404						{object}	errorResponse				"Data not found error"
 //	@Failure		409						{object}	errorResponse				"Data conflict error"
 //	@Failure		500						{object}	errorResponse				"Internal server error"
-//	@Router			/configs/{name} [put]
+//	@Router			/cms/configs/{name} [put]
 //	@Security		BearerAuth
 func (ch *ConfigurationHandler) PutConfiguration(ctx *gin.Context) {
 	var reqUri putConfigurationRequestUri
@@ -88,7 +88,7 @@ type getConfigurationRequest struct {
 //	@Tags			Configurations
 //	@Accept			json
 //	@Produce		json
-//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
+//	@Param			name	path		string					true	"Configuration name"	example:"person_config"
 //	@Success		200		{object}	configurationResponse	"Configuration found"
 //	@Failure		400		{object}	errorResponse			"Validation error"
 //	@Failure		401		{object}	errorResponse			"Unauthorized error"
@@ -96,7 +96,7 @@ type getConfigurationRequest struct {
 //	@Failure		404		{object}	errorResponse			"Data not found error"
 //	@Failure		409		{object}	errorResponse			"Data conflict error"
 //	@Failure		500		{object}	errorResponse			"Internal server error"
-//	@Router			/configs/{name} [get]
+//	@Router			/cms/configs/{name} [get]
 //	@Security		BearerAuth
 func (ch *ConfigurationHandler) GetConfiguration(ctx *gin.Context) {
 	var req getConfigurationRequest
@@ -137,7 +137,7 @@ type listConfigurationsRequest struct {
 //	@Failure		404		{object}	errorResponse			"Data not found error"
 //	@Failure		409		{object}	errorResponse			"Data conflict error"
 //	@Failure		500		{object}	errorResponse			"Internal server error"
-//	@Router			/configs/ [get]
+//	@Router			/cms/configs [get]
 //	@Security		BearerAuth
 func (ch *ConfigurationHandler) ListConfigurations(ctx *gin.Context) {
 	var req listConfigurationsRequest
@@ -177,8 +177,8 @@ type getConfigurationVersionRequest struct {
 //	@Tags			Configurations
 //	@Accept			json
 //	@Produce		json
-//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
-//	@Param			version	path		int						true	"Configuration name"	example:"1"
+//	@Param			name	path		string					true	"Configuration name"	example:"person_config"
+//	@Param			version	path		int						true	"Version Number"	example:"1"
 //	@Success		200		{object}	configurationResponse	"Configuration found"
 //	@Failure		400		{object}	errorResponse			"Validation error"
 //	@Failure		401		{object}	errorResponse			"Unauthorized error"
@@ -186,7 +186,7 @@ type getConfigurationVersionRequest struct {
 //	@Failure		404		{object}	errorResponse			"Data not found error"
 //	@Failure		409		{object}	errorResponse			"Data conflict error"
 //	@Failure		500		{object}	errorResponse			"Internal server error"
-//	@Router			/configs/{name}/versions/{version} [get]
+//	@Router			/cms/configs/{name}/versions/{version} [get]
 //	@Security		BearerAuth
 func (ch *ConfigurationHandler) GetConfigurationVersion(ctx *gin.Context) {
 	var req getConfigurationVersionRequest
@@ -219,7 +219,7 @@ type listConfigurationVersionsRequestForm struct {
 //	@Tags			Configurations
 //	@Accept			json
 //	@Produce		json
-//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
+//	@Param			name	path		string					true	"Configuration name"	example:"person_config"
 //	@Param			skip	query		int						false	"Starting offset"		example:"0"
 //	@Param			limit	query		int						true	"Page size"				example:"5"
 //
@@ -230,7 +230,7 @@ type listConfigurationVersionsRequestForm struct {
 //	@Failure		404		{object}	errorResponse			"Data not found error"
 //	@Failure		409		{object}	errorResponse			"Data conflict error"
 //	@Failure		500		{object}	errorResponse			"Internal server error"
-//	@Router			/configs/{name}/versions [get]
+//	@Router			/cms/configs/{name}/versions [get]
 //	@Security		BearerAuth
 func (ch *ConfigurationHandler) ListConfigurationVersions(ctx *gin.Context) {
 	var reqUri listConfigurationVersionsRequestUri
@@ -275,8 +275,8 @@ type rollbackConfigurationVersionRequest struct {
 //	@Tags			Configurations
 //	@Accept			json
 //	@Produce		json
-//	@Param			name	path		string					true	"Configuration name"	example:"app_config"
-//	@Param			version	path		int						true	"Configuration name"	example:"1"
+//	@Param			name	path		string					true	"Configuration name"	example:"person_config"
+//	@Param			version	path		int						true	"Version Number"	example:"1"
 //	@Success		200		{object}	configurationResponse	"Configuration rolled back"
 //	@Failure		400		{object}	errorResponse			"Validation error"
 //	@Failure		401		{object}	errorResponse			"Unauthorized error"
@@ -284,7 +284,7 @@ type rollbackConfigurationVersionRequest struct {
 //	@Failure		404		{object}	errorResponse			"Data not found error"
 //	@Failure		409		{object}	errorResponse			"Data conflict error"
 //	@Failure		500		{object}	errorResponse			"Internal server error"
-//	@Router			/configs/{name}/versions/{version}/rollback [post]
+//	@Router			/cms/configs/{name}/versions/{version}/rollback [post]
 //	@Security		BearerAuth
 func (ch *ConfigurationHandler) RollbackConfigurationVersion(ctx *gin.Context) {
 	var req rollbackConfigurationVersionRequest

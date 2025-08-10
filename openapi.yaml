@@ -7,7 +7,7 @@ info:
 servers:
 - url: http://localhost:8080/
 paths:
-  /configs/:
+  /cms/configs:
     get:
       tags:
       - Configurations
@@ -68,7 +68,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/http.errorResponse'
-  /configs/{name}:
+  /cms/configs/{name}:
     get:
       tags:
       - Configurations
@@ -188,7 +188,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/http.errorResponse'
       x-codegen-request-body-name: createCategoryRequest
-  /configs/{name}/versions:
+  /cms/configs/{name}/versions:
     get:
       tags:
       - Configurations
@@ -255,7 +255,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/http.errorResponse'
-  /configs/{name}/versions/{version}:
+  /cms/configs/{name}/versions/{version}:
     get:
       tags:
       - Configurations
@@ -271,7 +271,7 @@ paths:
           type: string
       - name: version
         in: path
-        description: Configuration name
+        description: Version Number
         required: true
         schema:
           type: integer
@@ -318,7 +318,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/http.errorResponse'
-  /configs/{name}/versions/{version}/rollback:
+  /cms/configs/{name}/versions/{version}/rollback:
     post:
       tags:
       - Configurations
@@ -333,7 +333,7 @@ paths:
           type: string
       - name: version
         in: path
-        description: Configuration name
+        description: Version Number
         required: true
         schema:
           type: integer
@@ -391,7 +391,7 @@ components:
           example: 2023-10-01T12:00:00Z
         name:
           type: string
-          example: app_config
+          example: person_config
         rollbacked_version:
           type: integer
           description: Optional field for copied version

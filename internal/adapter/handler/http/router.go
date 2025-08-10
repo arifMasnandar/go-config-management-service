@@ -40,15 +40,16 @@ func NewRouter(
 	// Swagger
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	configuration := router.Group("/configs")
+	configuration := router.Group("/cms")
 	{
-		configuration.GET("", configurationHandler.ListConfigurations)
-		configuration.GET("/", configurationHandler.ListConfigurations)
-		configuration.PUT("/:name", configurationHandler.PutConfiguration)
-		configuration.GET("/:name", configurationHandler.GetConfiguration)
-		configuration.GET("/:name/versions", configurationHandler.ListConfigurationVersions)
-		configuration.GET("/:name/versions/:version", configurationHandler.GetConfigurationVersion)
-		configuration.POST("/:name/versions/:version/rollback", configurationHandler.RollbackConfigurationVersion)
+		configuration.GET("/configs", configurationHandler.ListConfigurations)
+		configuration.GET("/configs/", configurationHandler.ListConfigurations)
+		configuration.PUT("/configs/:name", configurationHandler.PutConfiguration)
+		configuration.GET("/configs/:name", configurationHandler.GetConfiguration)
+		configuration.GET("/configs/:name/versions", configurationHandler.ListConfigurationVersions)
+		configuration.GET("/configs/:name/versions/", configurationHandler.ListConfigurationVersions)
+		configuration.GET("/configs/:name/versions/:version", configurationHandler.GetConfigurationVersion)
+		configuration.POST("/configs/:name/versions/:version/rollback", configurationHandler.RollbackConfigurationVersion)
 	}
 
 	return &Router{
