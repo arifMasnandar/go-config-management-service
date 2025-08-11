@@ -24,7 +24,7 @@ type putConfigurationRequestUri struct {
 
 type putConfigurationRequestJson struct {
 	Type  string                 `json:"type" binding:"required" example:"person"`
-	Value map[string]interface{} `json:"value" swaggertype:"object,string" binding:"required"`
+	Value map[string]interface{} `json:"value" swaggertype:"object,string" binding:"required" example:"name:John Doe,age:[remove qoute]99[remove qoute]"`
 }
 
 // PutConfiguration godoc

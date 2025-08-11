@@ -391,7 +391,7 @@ components:
           example: 2023-10-01T12:00:00Z
         name:
           type: string
-          example: person_config
+          example: app_config
         rollbacked_version:
           type: integer
           description: Optional field for copied version
@@ -427,9 +427,12 @@ components:
       properties:
         type:
           type: string
-          example: config_type
+          example: person
         value:
           type: object
           additionalProperties:
             type: string
+          example:
+            age: "[remove qoute]99[remove qoute]"
+            name: John Doe
 x-original-swagger-version: "2.0"

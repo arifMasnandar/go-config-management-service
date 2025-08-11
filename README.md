@@ -148,3 +148,4 @@ We use resource oriented rest architectural style.
 ### Notes
 
 1.  **TODO** Create or replace config is not thread safe yet. Concurrent access may causes some historical version having a same version number.
+2. Schema validations are stored as map entries in the core service.

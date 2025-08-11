@@ -562,6 +562,10 @@ const docTemplate = `{
                     "type": "object",
                     "additionalProperties": {
                         "type": "string"
+                    },
+                    "example": {
+                        "age": "[remove qoute]99[remove qoute]",
+                        "name": "John Doe"
                     }
                 }
             }
