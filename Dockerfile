@@ -15,7 +15,7 @@
     WORKDIR /app
 
     COPY --from=builder /app/gocms .
-    COPY .env.example .env
+    COPY .env .env
 
     EXPOSE 8080
 

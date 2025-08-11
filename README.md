@@ -6,45 +6,48 @@ A simple REST Config Management web service written in Go programming language.
 
 It uses [Gin](https://gin-gonic.com/) as the HTTP framework. Currently configurations are stored in memory, which will be lost when the application is stop. 
 
-## Try with docker container
-1. Create docker image
-    ```bash
-    docker build -t gocms .
-    ```
-2. Create and run docker container
-    ```bash
-    docker run --name gocms_app  -p 8080:8080 gocms:latest
-    ```
-3. Open API documentation in the browser
-    `http://localhost:8080/docs/index.html`
-
 ## Getting Started
 
-1. If you do not use devcontainer, ensure you have [Go](https://go.dev/dl/) 1.23 or higher and [Task](https://taskfile.dev/installation/) installed on your machine:
+1. If you do not use devcontainer, ensure you have [Go](https://go.dev/dl/) 1.23 or higher and `Make` are installed on your machine:
 
     ```bash
-    go version && task --version
+    go version && make --version
     ```
 
-2. Create a copy of the `.env.example` file, put and rename it to `/cmd/http/.env`:
+2. Create a copy of the `.env.example` file and rename it to `.env`:
 
     ```bash
-    cp .env.example /cmd/http/.env
+    cp .env.example .env
     ```
 
     Update configuration values as needed.
 
-3. Install all dependencies, run docker compose, create database schema, and run database migrations:
+3. Run the project in development mode:
 
     ```bash
-    task
+    make run
     ```
+4. Open API documentation in the browser
+    `http://localhost:8080/docs/index.html`
 
-4. Run the project in development mode:
+## Try with docker container
+1. Create a copy of the `.env.example` file and rename it to `.env`:
 
     ```bash
-    task dev
+    cp .env.example .env
     ```
+
+    Update configuration values as needed.
+2. Create docker image
+    ```bash
+    docker build -t gocms .
+    ```
+3. Create and run docker container
+    ```bash
+    docker run --name gocms_app  -p 8080:8080 gocms:latest
+    ```
+4. Open API documentation in the browser
+    `http://localhost:8080/docs/index.html`
 
 ## API Documentation
 
