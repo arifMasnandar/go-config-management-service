@@ -13,7 +13,27 @@ It uses [Gin](https://gin-gonic.com/) as the HTTP framework. Currently configura
     ```bash
     go version && make --version
     ```
+2. Go to project root directory
 
+3. Create a copy of the `.env.example` file and rename it to `.env`:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+    Update configuration values as needed.
+
+4. Run the project in development mode:
+
+    ```bash
+    make run
+    ```
+5. Open API documentation in the browser
+    `http://localhost:8080/docs/index.html`
+
+## Run as a docker container
+
+1. Go to project root directory
 2. Create a copy of the `.env.example` file and rename it to `.env`:
 
     ```bash
@@ -21,32 +41,15 @@ It uses [Gin](https://gin-gonic.com/) as the HTTP framework. Currently configura
     ```
 
     Update configuration values as needed.
-
-3. Run the project in development mode:
-
-    ```bash
-    make run
-    ```
-4. Open API documentation in the browser
-    `http://localhost:8080/docs/index.html`
-
-## Try with docker container
-1. Create a copy of the `.env.example` file and rename it to `.env`:
-
-    ```bash
-    cp .env.example .env
-    ```
-
-    Update configuration values as needed.
-2. Create docker image
+3. Create docker image
     ```bash
     docker build -t gocms .
     ```
-3. Create and run docker container
+4. Create and run docker container
     ```bash
     docker run --name gocms_app  -p 8080:8080 gocms:latest
     ```
-4. Open API documentation in the browser
+5. Open API documentation in the browser
     `http://localhost:8080/docs/index.html`
 
 ## API Documentation
