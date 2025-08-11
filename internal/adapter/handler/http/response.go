@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"example.com/go-config-management-service/internal/core/domain"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/domain"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"

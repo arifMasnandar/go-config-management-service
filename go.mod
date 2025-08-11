@@ -1,4 +1,4 @@
-module example.com/go-config-management-service
+module github.com/arifMasnandar/go-config-management-service
 
 go 1.24.4
 

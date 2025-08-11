@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"example.com/go-config-management-service/internal/core/domain"
-	"example.com/go-config-management-service/internal/core/port"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/domain"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/port"
 	"github.com/kaptinlin/jsonschema"
 )
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"example.com/go-config-management-service/internal/core/domain"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/domain"
 )
 
 type ConfigurationRepository struct {

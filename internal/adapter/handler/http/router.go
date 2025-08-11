@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"strings"
 
-	"example.com/go-config-management-service/internal/adapter/config"
+	"github.com/arifMasnandar/go-config-management-service/internal/adapter/config"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

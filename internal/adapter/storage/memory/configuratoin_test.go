@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"example.com/go-config-management-service/internal/core/domain"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/domain"
 )
 
 func TestEmptyConfigurations(t *testing.T) {

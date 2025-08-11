@@ -5,12 +5,12 @@ import (
 	"log/slog"
 	"os"
 
-	"example.com/go-config-management-service/internal/adapter/config"
-	"example.com/go-config-management-service/internal/adapter/handler/http"
-	"example.com/go-config-management-service/internal/adapter/storage/memory"
-	"example.com/go-config-management-service/internal/core/service"
+	"github.com/arifMasnandar/go-config-management-service/internal/adapter/config"
+	"github.com/arifMasnandar/go-config-management-service/internal/adapter/handler/http"
+	"github.com/arifMasnandar/go-config-management-service/internal/adapter/storage/memory"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/service"
 
-	_ "example.com/go-config-management-service/docs"
+	_ "github.com/arifMasnandar/go-config-management-service/docs"
 )
 
 func main() {

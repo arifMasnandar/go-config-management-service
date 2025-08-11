@@ -3,7 +3,7 @@ package port
 import (
 	"context"
 
-	"example.com/go-config-management-service/internal/core/domain"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/domain"
 )
 
 type ConfigurationRepository interface {

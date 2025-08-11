@@ -1,8 +1,8 @@
 package http
 
 import (
-	"example.com/go-config-management-service/internal/core/domain"
-	"example.com/go-config-management-service/internal/core/service"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/domain"
+	"github.com/arifMasnandar/go-config-management-service/internal/core/service"
 	"github.com/gin-gonic/gin"
 )
 
