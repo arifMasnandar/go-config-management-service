@@ -71,6 +71,10 @@ API documentation (openapi v3.0) is `openapy.yaml`. This document is created by 
 
 2. Basic error handling have been applied for standard flow. **TODO**: Implementation to edge cases.
 
+3. **TODO** To add proper logging using lib like Zap, and other obsertabilities (Metric & Tracing) using lib like Open Telemetry or calls  monitoring tool's API
+
+4. **TODO** To use proper configuration (using lib like Viper)
+
 ### Test Coverage
 
 1. Standard functionalities have been tested, including:
